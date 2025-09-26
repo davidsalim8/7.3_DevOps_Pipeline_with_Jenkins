@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // placeholder for registration data - username and hashed password
 const users = [];
@@ -55,6 +55,9 @@ app.get('/', (req, res) => {
         res.redirect('/home')
     }
 });
+
+// health check
+app.get('/health', (_req, res) => res.status(200).send('OK'));
 
 // registration
 app.get('/register', (req, res) => {
@@ -116,7 +119,11 @@ app.get('/tutorial', requireLogin, (req, res) =>
     res.render('tutorial', { user: req.session.user }));
 
 // start server
-app.listen(port, () => {
-    console.log(`Web server running at: http://localhost:${port}`)
-    console.log(`Type Ctrl+C to shut down the web server`)
-})
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Web server running at: http://localhost:${port}`)
+        console.log(`Type Ctrl+C to shut down the web server`)
+    })
+}
+
+module.exports = app;
