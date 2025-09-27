@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand",
+    "test:ci": "mkdir -p reports && jest --runInBand --reporters=default --reporters=jest-junit",
     "lint": "eslint . --ext .js",
     "lint:ci": "mkdir -p reports && eslint . --ext .js -f junit -o reports/eslint-junit.xml || true",
     "audit:ci": "mkdir -p reports && npm audit --omit=dev --json > reports/npm-audit.json || true && npm audit --omit=dev --audit-level=high || true",
@@ -26,6 +27,7 @@
     "eslint": "^9.36.0",
     "globals": "^16.4.0",
     "jest": "^30.1.3",
+    "jest-junit": "^16.0.0",
     "supertest": "^7.1.4"
   }
 }

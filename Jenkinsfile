@@ -12,7 +12,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm test"'
+                bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm run test:ci"'
+                junit allowEmptyResults: false, testResults: 'reports/jest-junit.xml'
+            }
+            post {
+                always {
+                junit allowEmptyResults: false, testResults: 'reports/jest-junit.xml'
+                archiveArtifacts artifacts: 'reports/jest-junit.xml'
             }
         }
         
@@ -22,8 +28,8 @@ pipeline {
             }
             post {
                 always {
-                archiveArtifacts artifacts: 'reports/eslint-junit.xml', fingerprint: true
                 junit allowEmptyResults: true, testResults: 'reports/eslint-junit.xml'
+                archiveArtifacts artifacts: 'reports/eslint-junit.xml'
                 }
             }
         }
@@ -34,7 +40,7 @@ pipeline {
             }
             post {
                 always {
-                archiveArtifacts artifacts: 'reports/npm-audit.json', fingerprint: true
+                archiveArtifacts artifacts: 'reports/npm-audit.json'
                 }
             }
         }
