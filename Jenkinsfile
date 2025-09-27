@@ -13,7 +13,6 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm run test:ci"'
-                junit allowEmptyResults: false, testResults: 'reports/jest-junit.xml'
             }
             post {
                 always {
