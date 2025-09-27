@@ -12,7 +12,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm run test:ci"'
+                bat 'docker run --rm -e JEST_JUNIT_OUTPUT=reports/jest-junit.xml -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm run test:ci"'
             }
             post {
                 always {
