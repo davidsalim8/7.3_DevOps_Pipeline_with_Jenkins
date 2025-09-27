@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const path = require('path');
-const { timeStamp } = require('console');
 
 const app = express();
 const port = process.env.PORT || 3000;
