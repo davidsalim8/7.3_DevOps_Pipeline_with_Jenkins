@@ -17,7 +17,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'docker run --rm -v "%CD%":/app -w /app node:20-alpine sh -lc "npm ci && npm test"'
+                bat 'docker run --rm -v "%WORKSPACE%":/app -w /app node:20-alpine sh -lc "npm ci && npm test"'
             }
         }
     }
