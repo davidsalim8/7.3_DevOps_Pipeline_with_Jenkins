@@ -18,9 +18,9 @@ pipeline {
                 always {
                 junit allowEmptyResults: false, testResults: 'reports/jest-junit.xml'
                 archiveArtifacts artifacts: 'reports/jest-junit.xml'
+                }
             }
         }
-        
         stage('Code Quality') {
             steps {
                 bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm run lint:ci"'
