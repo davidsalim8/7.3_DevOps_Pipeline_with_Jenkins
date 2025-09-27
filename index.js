@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const { timeStamp } = require('console');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -57,7 +58,12 @@ app.get('/', (req, res) => {
 });
 
 // health check
-app.get('/health', (_req, res) => res.status(200).send('OK'));
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        timestamp: new Date().toISOString()
+    });
+});
 
 // registration
 app.get('/register', (req, res) => {
@@ -123,7 +129,7 @@ if (require.main === module) {
     app.listen(port, () => {
         console.log(`Web server running at: http://localhost:${port}`)
         console.log(`Type Ctrl+C to shut down the web server`)
-    })
+    });
 }
 
 module.exports = app;

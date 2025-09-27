@@ -14,5 +14,11 @@ pipeline {
                 bat 'echo Built image: davidsalim/7.3_Devops_Pipeline_Jenkins:%BUILD_NUMBER%'
             }
         }
+
+        stage('Test') {
+            steps {
+                bat 'docker run --rm -v "%CD%":/app -w /app node:20 sh -lc "npm ci && npm test"'
+            }
+        }
     }
 }
