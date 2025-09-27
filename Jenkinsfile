@@ -20,5 +20,11 @@ pipeline {
                 bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm test"'
             }
         }
+        stage('Code Quality') {
+            steps {
+                bat 'docker run --rm -v "%WORKSPACE%":/app -v /app/node_modules -w /app node:20-alpine sh -lc "npm ci && npm run lint:ci"'
+                junit allowEmptyResults: true, testResults: 'reports/eslint-junit.xml'
+            }
+        }
     }
 }
