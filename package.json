@@ -6,6 +6,7 @@
     "test": "jest --runInBand",
     "lint": "eslint . --ext .js",
     "lint:ci": "mkdir -p reports && eslint . --ext .js -f junit -o reports/eslint-junit.xml || true",
+    "audit:ci": "mkdir -p reports && npm audit --omit=dev --json > reports/npm-audit.json || true && npm audit --omit=dev --audit-level=high || true",
     "start": "node .",
     "start:dev": "nodemon ."
   },
